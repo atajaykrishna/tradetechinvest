@@ -1,0 +1,425 @@
+/* ============================================
+   TradeTech Invest - Shared Stylesheet
+   Professional, Elegant, Modern
+   ============================================ */
+
+:root {
+  --navy: #0a1f2e;
+  --slate: #1e2f3d;
+  --graphite: #2c3e4f;
+  --mist: #eef2f5;
+  --softline: #d8e0e6;
+  --accent: #9db5c9;
+  --text: #1f2c36;
+  --muted: #5b6b7a;
+  --white: #ffffff;
+  --light-bg: #f8fafc;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ============ Header & Navigation ============ */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--softline);
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
+
+.logo span {
+  font-weight: 300;
+  color: var(--muted);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.75rem;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--graphite);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+  letter-spacing: 0.01em;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--navy);
+}
+
+/* Mobile menu button */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background: var(--navy);
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+/* ============ Page Sections ============ */
+.page-wrap {
+  padding: 4rem 0 5rem;
+  min-height: 60vh;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 2.9rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 450;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-weight: 550;
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+}
+
+.lead {
+  font-size: 1.2rem;
+  color: var(--slate);
+  max-width: 750px;
+  margin-bottom: 2rem;
+  font-weight: 350;
+}
+
+/* ============ Grid Layouts ============ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  margin: 3rem 0;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 2.5rem 0;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* ============ Cards ============ */
+.card {
+  background: #fbfcfd;
+  border: 1px solid var(--softline);
+  border-radius: 14px;
+  padding: 1.8rem 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+  transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  border-color: #b8c7d3;
+  transform: translateY(-2px);
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.card-highlight {
+  background: var(--navy);
+  color: white;
+  border: none;
+}
+
+.card-highlight h3 {
+  color: white;
+}
+
+.card-highlight p {
+  color: #b8ccda;
+}
+
+/* ============ Metrics ============ */
+.metric {
+  font-size: 1.8rem;
+  font-weight: 450;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+/* ============ Buttons ============ */
+.btn {
+  display: inline-block;
+  background: var(--navy);
+  color: white;
+  padding: 0.85rem 2.2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: all 0.25s;
+  border: 1px solid var(--navy);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #132d3f;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--navy);
+  border: 1px solid var(--navy);
+}
+
+.btn-outline:hover {
+  background: var(--navy);
+  color: white;
+}
+
+.btn-light {
+  background: white;
+  color: var(--navy);
+  border: 1px solid white;
+}
+
+.btn-light:hover {
+  background: var(--mist);
+  border-color: var(--mist);
+}
+
+/* ============ Feature Sections ============ */
+.feature-section {
+  background: var(--light-bg);
+  border-radius: 20px;
+  padding: 3rem;
+  margin: 3rem 0;
+}
+
+.feature-section h2 {
+  margin-bottom: 2rem;
+}
+
+.feature-list {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+
+.feature-list li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--softline);
+  color: var(--slate);
+  display: flex;
+  align-items: center;
+}
+
+.feature-list li::before {
+  content: '→';
+  margin-right: 1rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ============ Contact Section ============ */
+.contact-info {
+  background: var(--light-bg);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.contact-detail {
+  margin-bottom: 1.5rem;
+}
+
+.contact-detail label {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.contact-detail p {
+  font-size: 1.1rem;
+  color: var(--navy);
+  font-weight: 500;
+}
+
+/* ============ Footer ============ */
+.footer {
+  border-top: 1px solid var(--softline);
+  padding: 2.5rem 0;
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.footer a:hover {
+  color: var(--accent);
+}
+
+/* ============ Animation Classes ============ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.fade-in-delay-1 {
+  animation-delay: 0.2s;
+}
+
+.fade-in-delay-2 {
+  animation-delay: 0.4s;
+}
+
+.fade-in-delay-3 {
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  h1 {
+    font-size: 2.2rem;
+  }
+  
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+}
