@@ -1,16 +1,13 @@
-/* ============================================
-   TradeTech Invest - Shared JavaScript
-   Professional Interactions & Enhancements
-   ============================================ */
+
 
 document.addEventListener('DOMContentLoaded', function() {
   
   // ============ Active Navigation Link ============
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
   const navLinks = document.querySelectorAll('.nav-links a');
   
   navLinks.forEach(link => {
-    const linkPage = link.getAttribute('href');
+    const linkPage = link.getAttribute('href').replace('.html', '');
     if (linkPage === currentPage) {
       link.classList.add('active');
     } else {
@@ -23,15 +20,43 @@ document.addEventListener('DOMContentLoaded', function() {
   const navLinksContainer = document.querySelector('.nav-links');
   
   if (menuToggle && navLinksContainer) {
-    menuToggle.addEventListener('click', function() {
+    menuToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
       navLinksContainer.classList.toggle('active');
+      
+      // Animate hamburger icon
+      const spans = menuToggle.querySelectorAll('span');
+      if (navLinksContainer.classList.contains('active')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
     });
     
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
       if (!e.target.closest('.navbar')) {
         navLinksContainer.classList.remove('active');
+        const spans = menuToggle.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
       }
+    });
+    
+    // Close menu when clicking a link
+    navLinksContainer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function() {
+        navLinksContainer.classList.remove('active');
+        const spans = menuToggle.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      });
     });
   }
   
@@ -68,53 +93,54 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }, observerOptions);
   
-  // Observe all cards and feature sections
   document.querySelectorAll('.card, .feature-section, .contact-info').forEach(el => {
     observer.observe(el);
   });
   
   // ============ Metric Counter Animation ============
   const metrics = document.querySelectorAll('.metric');
-  metrics.forEach(metric => {
-    const targetValue = metric.textContent;
-    const isPercentage = targetValue.includes('%');
-    const numericValue = parseFloat(targetValue);
-    
-    if (!isNaN(numericValue)) {
-      let currentValue = 0;
-      const duration = 1500; // ms
-      const startTime = performance.now();
-      
-      function updateMetric(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easedProgress = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-        currentValue = numericValue * easedProgress;
+  
+  const metricObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const metric = entry.target;
+        const targetValue = metric.textContent;
+        const isPercentage = targetValue.includes('%');
+        const numericValue = parseFloat(targetValue);
         
-        metric.textContent = currentValue.toFixed(1) + (isPercentage ? '%' : '');
-        
-        if (progress < 1) {
-          requestAnimationFrame(updateMetric);
-        } else {
-          metric.textContent = targetValue;
-        }
-      }
-      
-      // Start animation when metric is in view
-      const metricObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            requestAnimationFrame(updateMetric);
-            metricObserver.unobserve(entry.target);
+        if (!isNaN(numericValue)) {
+          let currentValue = 0;
+          const duration = 1500;
+          const startTime = performance.now();
+          
+          function updateMetric(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easedProgress = 1 - Math.pow(1 - progress, 3);
+            currentValue = numericValue * easedProgress;
+            
+            metric.textContent = currentValue.toFixed(1) + (isPercentage ? '%' : '');
+            
+            if (progress < 1) {
+              requestAnimationFrame(updateMetric);
+            } else {
+              metric.textContent = targetValue;
+            }
           }
-        });
-      }, { threshold: 0.5 });
-      
-      metricObserver.observe(metric);
-    }
+          
+          requestAnimationFrame(updateMetric);
+        }
+        
+        metricObserver.unobserve(metric);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  metrics.forEach(metric => {
+    metricObserver.observe(metric);
   });
   
-  // ============ Form Validation (if contact form exists) ============
+  // ============ Form Handling ============
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
@@ -122,10 +148,11 @@ document.addEventListener('DOMContentLoaded', function() {
       
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone') ? document.getElementById('phone').value.trim() : '';
       const message = document.getElementById('message').value.trim();
       
       if (!name || !email || !message) {
-        showNotification('Please fill in all fields', 'error');
+        showNotification('Please fill in all required fields', 'error');
         return;
       }
       
@@ -134,9 +161,16 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       
-      // Simulate form submission
-      showNotification('Thank you for your inquiry. We will respond within 24 hours.', 'success');
-      contactForm.reset();
+      const subject = `Investment Inquiry from ${name}`;
+      const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`;
+      const mailtoLink = `mailto:info@tradetechinvest.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      showNotification('Opening your email client to send inquiry...', 'success');
+      window.location.href = mailtoLink;
+      
+      setTimeout(() => {
+        contactForm.reset();
+      }, 1000);
     });
   }
   
@@ -146,16 +180,18 @@ document.addEventListener('DOMContentLoaded', function() {
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
     
-    // Style notification
     notification.style.position = 'fixed';
     notification.style.top = '20px';
-    notification.style.right = '20px';
+    notification.style.left = '50%';
+    notification.style.transform = 'translateX(-50%)';
     notification.style.padding = '15px 25px';
     notification.style.borderRadius = '8px';
     notification.style.color = 'white';
     notification.style.zIndex = '1000';
-    notification.style.maxWidth = '400px';
+    notification.style.maxWidth = '90%';
+    notification.style.width = 'auto';
     notification.style.animation = 'slideIn 0.5s ease';
+    notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
     
     if (type === 'success') {
       notification.style.backgroundColor = '#4CAF50';
@@ -180,12 +216,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const style = document.createElement('style');
   style.textContent = `
     @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      from { transform: translate(-50%, -100%); opacity: 0; }
+      to { transform: translate(-50%, 0); opacity: 1; }
     }
     @keyframes slideOut {
-      from { transform: translateX(0); opacity: 1; }
-      to { transform: translateX(100%); opacity: 0; }
+      from { transform: translate(-50%, 0); opacity: 1; }
+      to { transform: translate(-50%, -100%); opacity: 0; }
     }
   `;
   document.head.appendChild(style);
