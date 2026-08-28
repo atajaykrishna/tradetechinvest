@@ -1,4 +1,5 @@
 
+
 :root {
   --navy: #0a1f2e;
   --slate: #1e2f3d;
@@ -26,15 +27,18 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  width: 100%;
 }
 
-/* ============ Header & Navigation ============ */
+/* ============ Header & Navigation (Desktop as before) ============ */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -78,12 +82,13 @@ body {
   transition: color 0.2s;
   letter-spacing: 0.01em;
   position: relative;
+  padding-bottom: 4px;
 }
 
 .nav-links a::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: 0;
   left: 0;
   width: 0;
   height: 1px;
@@ -101,7 +106,7 @@ body {
   color: var(--navy);
 }
 
-/* Mobile menu button */
+/* Mobile menu button - hidden on desktop */
 .menu-toggle {
   display: none;
   background: none;
@@ -119,7 +124,7 @@ body {
   transition: 0.3s;
 }
 
-/* ============ Page Sections ============ */
+/* ============ Page Sections (Desktop as before) ============ */
 .page-wrap {
   padding: 4rem 0 5rem;
   min-height: 60vh;
@@ -166,7 +171,7 @@ h3 {
   font-weight: 350;
 }
 
-/* ============ Grid Layouts ============ */
+/* ============ Grid Layouts (Desktop as before) ============ */
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -188,7 +193,7 @@ h3 {
   margin: 2rem 0;
 }
 
-/* ============ Cards ============ */
+/* ============ Cards (Desktop as before) ============ */
 .card {
   background: #fbfcfd;
   border: 1px solid var(--softline);
@@ -224,7 +229,7 @@ h3 {
   color: #b8ccda;
 }
 
-/* ============ Metrics ============ */
+/* ============ Metrics (Desktop as before) ============ */
 .metric {
   font-size: 1.8rem;
   font-weight: 450;
@@ -239,7 +244,7 @@ h3 {
   color: var(--muted);
 }
 
-/* ============ Buttons ============ */
+/* ============ Buttons (Desktop as before) ============ */
 .btn {
   display: inline-block;
   background: var(--navy);
@@ -281,7 +286,7 @@ h3 {
   border-color: var(--mist);
 }
 
-/* ============ Feature Sections ============ */
+/* ============ Feature Sections (Desktop as before) ============ */
 .feature-section {
   background: var(--light-bg);
   border-radius: 20px;
@@ -313,7 +318,7 @@ h3 {
   font-weight: 600;
 }
 
-/* ============ Contact Section ============ */
+/* ============ Contact Section (Desktop as before) ============ */
 .contact-info {
   background: var(--light-bg);
   border-radius: 16px;
@@ -339,7 +344,7 @@ h3 {
   font-weight: 500;
 }
 
-/* ============ Footer ============ */
+/* ============ Footer (Desktop as before) ============ */
 .footer {
   border-top: 1px solid var(--softline);
   padding: 2.5rem 0;
@@ -370,18 +375,6 @@ h3 {
   animation: fadeIn 0.8s ease forwards;
 }
 
-.fade-in-delay-1 {
-  animation-delay: 0.2s;
-}
-
-.fade-in-delay-2 {
-  animation-delay: 0.4s;
-}
-
-.fade-in-delay-3 {
-  animation-delay: 0.6s;
-}
-
 @keyframes fadeIn {
   to {
     opacity: 1;
@@ -389,14 +382,28 @@ h3 {
   }
 }
 
-/* ============ Responsive ============ */
+/* ============================================
+   MOBILE STYLES (max-width: 768px)
+   Fixed alignment for mobile
+   ============================================ */
 @media (max-width: 768px) {
-  .grid-2, .grid-3, .grid-4 {
-    grid-template-columns: 1fr;
+  /* Container adjustments */
+  .container {
+    padding: 0 1.5rem;
   }
   
-  h1 {
-    font-size: 2.2rem;
+  /* Navigation */
+  .navbar {
+    padding: 1rem 0;
+    flex-wrap: wrap;
+  }
+  
+  .logo {
+    font-size: 1.4rem;
+  }
+  
+  .menu-toggle {
+    display: block;
   }
   
   .nav-links {
@@ -407,15 +414,189 @@ h3 {
     left: 0;
     right: 0;
     background: white;
-    padding: 1rem 2rem;
+    padding: 1rem 1.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    gap: 0.5rem;
+    width: 100%;
   }
   
   .nav-links.active {
     display: flex;
   }
   
-  .menu-toggle {
+  .nav-links a {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  /* Page wrap */
+  .page-wrap {
+    padding: 2.5rem 0 3rem;
+  }
+  
+  /* Typography - centered on mobile */
+  .eyebrow {
+    text-align: center;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  h3 {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  
+  .lead {
+    font-size: 1rem;
+    text-align: center;
+    max-width: 100%;
+    margin: 0 auto 1.5rem;
+  }
+  
+  /* Grid layouts - stack vertically */
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  /* Cards - centered text */
+  .card {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .card p {
+    font-size: 0.9rem;
+  }
+  
+  /* Metrics section */
+  .metric {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .metric-label {
+    font-size: 0.75rem;
+    text-align: center;
+  }
+  
+  /* Buttons - full width on mobile */
+  .btn {
     display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  /* Feature section */
+  .feature-section {
+    padding: 2rem 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .feature-section h2 {
+    text-align: center;
+  }
+  
+  .feature-list li {
+    font-size: 0.9rem;
+    justify-content: center;
+  }
+  
+  /* Contact info */
+  .contact-info {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .contact-detail label {
+    text-align: center;
+  }
+  
+  .contact-detail p {
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  /* Footer */
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 2rem 0;
+  }
+  
+  /* Special boxes */
+  div[style*="background:var(--mist)"],
+  div[style*="background:var(--navy)"] {
+    text-align: center;
+    padding: 1.5rem !important;
+  }
+  
+  /* Ensure all content is centered */
+  p, span, a, div {
+    word-wrap: break-word;
+  }
+  
+  /* Fix for inline styles */
+  .grid-2 > div:first-child {
+    text-align: center;
+  }
+  
+  .grid-2 > div:first-child p {
+    text-align: center;
+  }
+  
+  /* Investor section */
+  div[style*="background:var(--navy)"] {
+    text-align: center !important;
+  }
+  
+  div[style*="background:var(--navy)"] h2 {
+    text-align: center !important;
+  }
+  
+  div[style*="background:var(--navy)"] p {
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* ============================================
+   TABLET STYLES (769px - 1024px)
+   ============================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
